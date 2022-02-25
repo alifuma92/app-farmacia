@@ -1,0 +1,95 @@
+/**
+ * Sample React Native App
+ * https://github.com/facebook/react-native
+ *
+ * @format
+ * @flow strict-local
+ */
+
+import React from 'react';
+
+import {
+  SafeAreaView,
+  StatusBar,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
+
+// import theme
+import { Theme } from './src/Config';
+
+// import screens
+import { 
+  Homepage,
+  OrdinaProdotti,
+  PrenotaAppuntamenti,
+  Farmacie,
+  Farmacia,
+  Articoli,
+  Articolo
+} from './src/Screens'
+
+// import react native vector icons
+import Icon from 'react-native-vector-icons/dist/Ionicons';
+
+// import react navigation component
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+
+const Tab = createBottomTabNavigator()
+const Stack = createNativeStackNavigator()
+
+const App = () => {
+
+  const StackNavigatorOptions = () => {
+    return {
+      headerTitle: () => <Text>LOGO</Text>,
+      headerBackTitleVisible: false,
+      headerTintColor: Theme.colors.base_text
+    }
+  }
+
+  const HomepageStackNavigator = () => {
+    return (
+      <Stack.Navigator>
+        <Stack.Screen name="Homepage" component={Homepage} options={StackNavigatorOptions} />
+        <Stack.Screen name="Farmacie" component={Farmacie} options={StackNavigatorOptions} />
+        <Stack.Screen name="Farmacia" component={Farmacia} options={StackNavigatorOptions} />
+        <Stack.Screen name="Articoli" component={Articoli} options={StackNavigatorOptions} />
+        <Stack.Screen name="Articolo" component={Articolo} options={StackNavigatorOptions} />
+      </Stack.Navigator>
+    )
+  }
+
+  return (
+    <NavigationContainer>
+      <Tab.Navigator
+        screenOptions={({ route }) => ({
+          tabBarIcon: ({ focused, color, size }) => {
+            let iconName;
+            if (route.name === 'Home') {
+              iconName = 'home'
+            } else if (route.name === 'Ordina') {
+              iconName = 'cart'
+            } else if (route.name === 'Prenota') {
+              iconName = 'calendar'
+            }
+            // You can return any component that you like here!
+            return <Icon name={iconName} size={size} color={color} />;
+          },
+          tabBarActiveTintColor: Theme.colors.primary,
+          tabBarInactiveTintColor: Theme.colors.base_text,
+        })}
+      >
+        <Tab.Screen name="Home" component={HomepageStackNavigator} options={{headerShown: false}} />
+        <Tab.Screen name="Ordina" component={OrdinaProdotti} />
+        <Tab.Screen name="Prenota" component={PrenotaAppuntamenti} />
+      </Tab.Navigator>
+    </NavigationContainer>
+  );
+};
+
+
+export default App;
