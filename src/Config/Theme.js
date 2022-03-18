@@ -6,7 +6,8 @@ const Theme = {
         base_text: 'rgba(34, 34, 34, 1)',
         light: 'rgba(255,255,255,1)',
         light_50: 'rgba(255,255,255,0.5)',
-        dark: 'rgba(34, 34, 34, 1)'
+        dark: 'rgba(34, 34, 34, 1)',
+        medium_dark: 'rgba(180, 180, 180, 1)'
     },
     borderRadius: {
         base: 10

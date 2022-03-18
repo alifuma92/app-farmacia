@@ -1,14 +1,139 @@
-import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import React, {useState, useRef} from 'react'
+import { StyleSheet, Text, View, ScrollView, TouchableOpacity } from 'react-native'
+
+// import custom components
+import { ScreenWrapper, ScreenHeader, ListItem, Button, Filter } from '../Components'
+
+// import config
+import { Theme } from '../Config'
+
+// import fake api
+import { Services } from '../FakeServer'
+
+// import bottom sheet component
+import BottomSheet from '@gorhom/bottom-sheet';
 
 const PrenotaAppuntamenti = () => {
+
+  // can be: []
+  // or:
+  // [{label: 'category', value: 'esami'}, ...]
+  const [filters, setFilters] = useState([])
+
+  // refs
+  const bottomSheetRef = useRef(null);
+
+  const removeFilter = (index) => {
+    let actual_filters = [...filters]
+    actual_filters.splice(index)
+    setFilters(actual_filters)
+  }
+
   return (
-    <View>
-      <Text>PrenotaAppuntamenti</Text>
-    </View>
+    <ScreenWrapper>
+
+      <ScrollView
+        showsVerticalScrollIndicator={false}
+      >
+        <ScreenHeader
+          title="Prenota appuntamenti"
+          icon="calendar"
+          iconBackgroundColor={Theme.colors.primary_50}
+        />
+
+        {/* SEZIONE FILTRI SELEZIONATI */}
+        {
+          filters.length > 0 
+          &&
+          <View style={{paddingHorizontal: 10, marginBottom: 25, borderBottomWidth: 1, borderBottomColor: Theme.colors.secondary, paddingBottom: 15}}>
+            <Text style={{color: Theme.colors.medium_dark, fontSize: 15, marginBottom: 5}}>
+              Filtra per
+            </Text>
+            <View style={{flexDirection: 'row', flexWrap: 'wrap'}}>
+              {
+                filters.map((item, index) => {
+                  return (
+                    <Filter
+                      key={index}
+                      value={item.value}
+                      action={() => removeFilter(index)}
+                    />
+                  )
+                })
+              }
+            </View>
+          </View>
+        }
+        
+
+        {/* LISTA SERVIZI */}
+        <View style={{paddingHorizontal: 10}}>
+          {
+            Services.length > 0
+            ?
+              Services.map((item, index) => (
+                <TouchableOpacity
+                  key={index} 
+                  style={{marginBottom: 10}}
+                  onPress={() => alert('vai a ...')}
+                >
+                  <ListItem
+                    title={item.title}
+                    category={item.category}
+                  />
+                </TouchableOpacity>
+              ))
+            :
+              <Text>
+                Al momento non è possibile prenotare nessun servizio/esame.
+              </Text>
+          }
+        </View>
+      </ScrollView>
+
+      {/* FLOATING BUTTON FILTRI */}
+      <View style={styles.floatingButtonContainer}>
+          <Button
+            activeOpacity={0.8}
+            title="Filtra"
+            color={Theme.colors.light}
+            backgroundColor={Theme.colors.primary}
+            size="large"
+          />
+      </View>
+
+      {/* BOTTOM SHEET FILTERS */}
+      <BottomSheet
+        ref={bottomSheetRef}
+        index={0}
+        snapPoints={[200]}
+        enablePanDownToClose={true}
+        //onChange={handleSheetChanges}
+      >
+        <View style={styles.contentContainer}>
+          <Text>Awesome 🎉</Text>
+        </View>
+      </BottomSheet>
+    </ScreenWrapper>
   )
 }
 
 export default PrenotaAppuntamenti
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+  floatingButtonContainer: {
+    width: 100,
+    position: 'absolute', 
+    bottom: 25, 
+    left: '50%', 
+    marginLeft: -50,
+    shadowColor: Theme.colors.dark,
+    shadowOffset: {
+      width: 0,
+      height: 5,
+    },
+    shadowOpacity: 0.2,
+    shadowRadius: 12,
+    elevation: 1,
+  }
+})

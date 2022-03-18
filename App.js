@@ -27,11 +27,14 @@ import {
   Farmacie,
   Farmacia,
   Articoli,
-  Articolo
+  Articolo,
 } from './src/Screens'
 
 // import react native vector icons
 import Icon from 'react-native-vector-icons/dist/Ionicons';
+
+// import gesture handler
+import {GestureHandlerRootView} from 'react-native-gesture-handler'
 
 // import react navigation component
 import { NavigationContainer } from '@react-navigation/native';
@@ -63,31 +66,41 @@ const App = () => {
     )
   }
 
+  const PrenotaAppuntamentiStackNavigator = () => {
+    return (
+      <Stack.Navigator>
+        <Stack.Screen name="PrenotaAppuntamenti" component={PrenotaAppuntamenti} options={StackNavigatorOptions} />
+      </Stack.Navigator>
+    )
+  }
+
   return (
-    <NavigationContainer>
-      <Tab.Navigator
-        screenOptions={({ route }) => ({
-          tabBarIcon: ({ focused, color, size }) => {
-            let iconName;
-            if (route.name === 'Home') {
-              iconName = 'home'
-            } else if (route.name === 'Ordina') {
-              iconName = 'cart'
-            } else if (route.name === 'Prenota') {
-              iconName = 'calendar'
-            }
-            // You can return any component that you like here!
-            return <Icon name={iconName} size={size} color={color} />;
-          },
-          tabBarActiveTintColor: Theme.colors.primary,
-          tabBarInactiveTintColor: Theme.colors.base_text,
-        })}
-      >
-        <Tab.Screen name="Home" component={HomepageStackNavigator} options={{headerShown: false}} />
-        <Tab.Screen name="Ordina" component={OrdinaProdotti} />
-        <Tab.Screen name="Prenota" component={PrenotaAppuntamenti} />
-      </Tab.Navigator>
-    </NavigationContainer>
+    <GestureHandlerRootView style={{flex: 1}}>
+      <NavigationContainer>
+        <Tab.Navigator
+          screenOptions={({ route }) => ({
+            tabBarIcon: ({ focused, color, size }) => {
+              let iconName;
+              if (route.name === 'Home') {
+                iconName = 'home'
+              } else if (route.name === 'Ordina') {
+                iconName = 'cart'
+              } else if (route.name === 'Prenota') {
+                iconName = 'calendar'
+              }
+              // You can return any component that you like here!
+              return <Icon name={iconName} size={size} color={color} />;
+            },
+            tabBarActiveTintColor: Theme.colors.primary,
+            tabBarInactiveTintColor: Theme.colors.base_text,
+          })}
+        >
+          <Tab.Screen name="Home" component={HomepageStackNavigator} options={{headerShown: false}} />
+          <Tab.Screen name="Ordina" component={OrdinaProdotti} />
+          <Tab.Screen name="Prenota" component={PrenotaAppuntamentiStackNavigator} options={{headerShown: false}}/>
+        </Tab.Navigator>
+      </NavigationContainer>
+    </GestureHandlerRootView>
   );
 };
 

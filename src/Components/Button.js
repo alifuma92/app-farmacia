@@ -4,7 +4,7 @@ import { StyleSheet, Text, View, TouchableOpacity } from 'react-native'
 // import Config
 import { Theme } from '../Config'
 
-const Button = ({title, color, backgroundColor, size = "medium", action, disabled = false}) => {
+const Button = ({title, color, backgroundColor, size = "medium", action, disabled = false, activeOpacity = 0.2}) => {
 
   const buttonHeight = (size) => {
     switch(size) {
@@ -19,13 +19,27 @@ const Button = ({title, color, backgroundColor, size = "medium", action, disable
     }
   }
 
+  const buttonFontSize = (size) => {
+    switch(size) {
+      case 'large':
+        return 20
+      case 'medium':
+        return 17
+      case 'small':
+        return 17
+      default:
+        return 17
+    }
+  }
+
   return (
     <TouchableOpacity
       style={{...styles.container, backgroundColor, height: buttonHeight(size)}}
       onPress={action}
       disabled={disabled}
+      activeOpacity={activeOpacity}
     >
-      <Text style={{...styles.text, color}}>
+      <Text style={{...styles.text, color, fontSize: buttonFontSize(size)}}>
         {title}
       </Text>
     </TouchableOpacity>
@@ -41,7 +55,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   text: {
-    fontSize: 17,
-    fontWeight: '600'
+    fontWeight: '600',
+    textAlign: 'center'
   }
 })

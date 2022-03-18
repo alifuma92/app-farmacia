@@ -88,7 +88,7 @@ const Homepage = ({navigation}) => {
               </Text>
               <Button
                 title="Vedi tutte"
-                action={() => alert('vai a news')}
+                action={() => navigation.navigate('Articoli')}
                 size="small"
                 color={Theme.colors.primary}
                 backgroundColor={Theme.colors.secondary}
@@ -104,10 +104,11 @@ const Homepage = ({navigation}) => {
                     return (
                       <TouchableOpacity
                         key={index}
-                        onPress={() => alert('Vai alla news')}
+                        onPress={() => navigation.navigate('Articolo', item)}
                         style={{paddingHorizontal: 5}}
                       >
                         <Card
+                          width={300}
                           title={item.title}
                           image={{uri: item.image}}
                           categories={item.categories}

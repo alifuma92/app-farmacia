@@ -1,14 +1,21 @@
 import React from 'react'
 import { StyleSheet, Text, View, ImageBackground } from 'react-native'
+
+// import Config
 import { Theme } from '../Config'
 
-const Card = ({ image, categories, title}) => {
+// import full width image component
+import FullWidthImage from 'react-native-fullwidth-image'
+
+// import custom component
+import { Tag } from '../Components'
+
+const Card = ({ image, categories, title, width}) => {
   return (
-    <View style={styles.container}>
-      <ImageBackground
+    <View style={{...styles.container, width}}>
+      <FullWidthImage
         source={image}
-        resizeMode="cover"
-        style={styles.imageBackground}
+        style={{}}
       />
       <View style={styles.content}>
         {
@@ -18,11 +25,10 @@ const Card = ({ image, categories, title}) => {
             {
               categories.map((item, index) => {
                 return (
-                  <View key={index} style={styles.tagContainer}>
-                    <Text style={styles.tagTitle}>
-                      {item}
-                    </Text>
-                  </View>
+                  <Tag
+                    key={index}
+                    title={item}
+                  />
                 )
               })
             }
@@ -43,7 +49,6 @@ const styles = StyleSheet.create({
     backgroundColor: Theme.colors.secondary,
     borderRadius: Theme.borderRadius.base,
     overflow: 'hidden',
-    width: 300,
     flex: 1
   },
   content: {
@@ -56,20 +61,5 @@ const styles = StyleSheet.create({
   title: {
     fontWeight: 'bold',
     fontSize: 17
-  },
-  tagContainer: {
-    height: 18,
-    paddingHorizontal: 10,
-    justifyContent: 'center',
-    backgroundColor: Theme.colors.primary,
-    borderRadius: Theme.borderRadius.base,
-    marginRight: 5,
-    marginBottom: 5
-  },
-  tagTitle: {
-    fontSize: 11,
-    fontWeight: 'bold',
-    textTransform: 'capitalize',
-    color: Theme.colors.light
   }
 })

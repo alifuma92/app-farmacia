@@ -43,6 +43,7 @@ const styles = StyleSheet.create({
   title: {
     color: Theme.colors.base_text,
     fontSize: 24,
-    fontWeight: '900'
+    fontWeight: '900',
+    textAlign: 'center'
   }
 })
