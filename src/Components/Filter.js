@@ -30,12 +30,12 @@ export default Filter
 const styles = StyleSheet.create({
     container: {
       backgroundColor: Theme.colors.secondary,
-      paddingHorizontal: 20,
+      paddingHorizontal: 10,
       borderRadius: Theme.borderRadius.base,
       flexDirection: 'row',
       justifyContent: 'center',
       alignItems: 'center',
-      height: 40,
+      height: 32,
       marginRight: 5,
       marginBottom:5
     },
@@ -43,6 +43,6 @@ const styles = StyleSheet.create({
       color: Theme.colors.primary,
       fontWeight: '600',
       textAlign: 'center',
-      fontSize: 17
+      fontSize: 14
     }
 })
